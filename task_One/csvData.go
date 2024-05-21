@@ -84,6 +84,7 @@ func main() {
 				Answer:   line[1],
 			}
 			dataFromFile = append(dataFromFile, temp)
+			shuffleData()
 		}
 	}
 	fmt.Println("Читайте вопрос,отвечаете и жмете enter. Ответ состоит из одного слова")
