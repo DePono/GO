@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	// Добавляем флаги для определения операции и имени файла
+	// Добавляем соответсвтующие флаги
 	createFlag := flag.String("create", "", "Имя файла для создания")
 	readFlag := flag.String("read", "", "Имя файла для чтения")
 	deleteFlag := flag.String("delete", "", "Имя файла для удаления")
 	flag.Parse()
 
-	// Выполняем операцию в зависимости от установленных флагов
+	// Описываем действия для соответствующих флагов
 	if *createFlag != "" {
 		content := []byte("Пример содержимого файла.\n")
 		err := os.WriteFile(*createFlag, content, fs.FileMode(0644))
