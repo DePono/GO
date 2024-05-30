@@ -1,1 +1,75 @@
+package main
 
+import (
+	"encoding/csv"
+	"fmt"
+	"math/rand"
+	"os"
+	"time"
+)
+
+// Обьявляем структуру Record
+type Record struct {
+	Question string
+	Answer   string
+}
+
+// Обьявляем необходимые переменные
+var questionWithAnswer = "problems.csv"
+var dataFromFile []Record
+var answer string
+var rightAnswer int
+var wrongAnswer int
+var usersFile string
+
+func readCSVFile(filepath string) ([][]string, error) {
+	//  проверяем, существует ли указанный путь к файлу и связан ли он с обычным файлом внутри функции.
+	fileInfo, err := os.Stat(questionWithAnswer)
+	mode := fileInfo.Mode()
+	if !mode.IsRegular() {
+		fmt.Println(questionWithAnswer, "error: not a regular file")
+	}
+
+	file, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
+	// Читаем файл csv весь сразу в тип данных lines - [][]string
+	lines, err := csv.NewReader(file).ReadAll()
+	if err != nil {
+		return [][]string{}, err
+	}
+	return lines, nil
+}
+
+func shuffleData() {
+	rand.NewSource(time.Now().Unix())
+	rand.Shuffle(len(dataFromFile), func(i, j int) {
+		dataFromFile[i], dataFromFile[j] = dataFromFile[j], dataFromFile[i]
+	})
+}
+
+func main() {
+	/*	aSlice := []int{1, 2, 3, 2}
+		bSlice := []int{3, 2}
+		var cSlice []int
+		first := crossUnique(aSlice)
+		second := crossUnique(aSlice, bSlice)
+		third := crossUnique(aSlice, bSlice, cSlice)
+		fmt.Println("Исходный aсрез", aSlice)
+		fmt.Println("Уникальные значения", first)
+		fmt.Println("Исходные асрез и бсрез", aSlice, bSlice)
+		fmt.Println("Уникальные значения", second)
+		fmt.Println("Исходные асрез, бсрез и ссрез", aSlice, bSlice, cSlice)
+		fmt.Println("Уникальные значения", third)
+		names := []string{"Ann", "Kate", "Peter", "Kate", "Ann", "Ann", "Helen"}
+		fmt.Println(countVoices(names))*/
+	//readJSONAndTable("dz3.json")
+	PrintTable(readJSON("dz3.json"))
+}
